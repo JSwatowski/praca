@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="text-center">
+    <h1 class="display-4">Welcome to movie-planet</h1>
+    <p>We have something interesting for you !</p>
+</div>
+
+<br />
+<br />
+<div class="text-center">
+
+    <h3>Newest movies and series</h3>
+
+</div>
+<hr />
+<partial name="_MoviesForHome" />
+
+<div class="text-center">
+
+    <a class="btn btn-outline-primary float-md-none" asp-controller="Movies" asp-action="Index"> See all movies </a>
+
+
+</div>
+
+<br />
+<br />
+<div class="text-center">
+
+    <h3>The best movies and series</h3>
+
+</div>
+<hr />
+<partial name="_MoviesForHomeRank" />
+
+<div class="text-center">
+
+    <a class="btn btn-outline-primary float-md-none" asp-controller="Movies" asp-action="Index"> See all movies </a>
+
+
+</div>

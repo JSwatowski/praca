@@ -1,0 +1,52 @@
+﻿@model IEnumerable<inzynierka.Models.Comments.Comment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="text-center">
+    <h1>Last comments</h1>
+</div>
+
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Publication
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                Movie name
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comments)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.OrderByDescending(x=> x.PublishedDate)) { 
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.PublishedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Movies.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments)
+            </td>
+            <td>
+                <a class="btn btn-outline-primary float-right" asp-controller="Movies" asp-action="Details" asp-route-id="@item.MovieId"> Show more</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

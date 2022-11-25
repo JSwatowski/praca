@@ -1,0 +1,28 @@
+﻿@model IEnumerable<pracainz.Models.Movie>
+
+
+
+<div class="row">
+    @foreach (var item in ViewBag.movieList as List<pracainz.Models.Movie>)
+    {
+        <div class="col-md-3 col-xs-4 border-primary mb-5 text-center" style="padding-left:7em;">
+            <div class="card mb-3" style="max-width: 250px;">
+                <div class="row g-0">
+
+                    <div class="col-md-12">
+                        <img src="@item.ImageURL" width="100%" alt="@item.Name">
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="card-footer">
+                            <p class="card-text col-md-14 mb-1">
+                            <p>  @item.Name</p>
+                            <a class="btn btn-outline-primary float-md-none" asp-action="Details" asp-route-id="@item.Id"> Show Details</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

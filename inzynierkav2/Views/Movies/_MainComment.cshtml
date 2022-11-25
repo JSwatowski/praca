@@ -1,0 +1,47 @@
+﻿@using inzynierkav2.Data.ViewModels
+@model CommentVM
+
+
+<dl class="dl-horizontal">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <dt>
+            Add your comment
+        </dt>
+
+        <dd>
+            <div class="commentBox">
+                @using (Html.BeginForm("Add", "Comments", FormMethod.Post, new { onsubmit = "return SubmitComment()" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal text-center">
+                        <div class="form-group">
+
+
+                            <div style=" width:100%">
+                                <textarea asp-for="Body" rows="10" cols="120"></textarea>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <input type="hidden" asp-for="MovieId" />
+                                <input type="hidden" name="Rating" id="Rating" value="0" />
+                                <input type="submit" id="btnRegister" name="btnRegister" value="Submit Comment" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </dd>
+    }
+</dl>
+
+<script>
+    function SubmitComment() {
+
+        return true;
+    }
+
+</script>
+

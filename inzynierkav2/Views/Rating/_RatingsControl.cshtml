@@ -1,0 +1,26 @@
+﻿@model inzynierkav2.Data.ViewModels.CommentVM
+
+
+@{
+    if (Model.Ratings.Count > 0)
+    {
+        <p>The overall rating is @((short)Model.OverallRating)</p>
+    }
+    else
+    {
+        <p><b>Be the first to rate</b></p>
+    }
+
+}
+@{ using (Html.BeginForm("SetRating", "Rating"))
+    {
+        @Html.HiddenFor(x => x.MovieId)
+        for (int i = 0; i < 10; i++)
+        {
+            <input type="radio" id="Rank" name="Rank" value="@i" />
+            @i
+        }
+        <input type="submit" value="Submit" />
+
+    }
+}

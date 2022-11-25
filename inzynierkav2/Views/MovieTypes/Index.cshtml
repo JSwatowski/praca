@@ -1,0 +1,38 @@
+﻿@model IEnumerable<pracainz.Models.MovieType>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <table>
+            <thead>
+                <tr class="text-center">
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td class="align-middle">
+                        <a class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i> Edit</a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

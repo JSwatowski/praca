@@ -1,0 +1,185 @@
+﻿@using inzynierkav2.Data.ViewModels
+@model inzynierkav2.Data.ViewModels.CommentVM
+@{
+    ViewData["Title"] = "Movie details";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <div class="card mb-12">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="@Model.ImageURL" width="100%" alt="@Model.Title">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <p class="card-text"><b>Title: </b>@Model.Title</p>
+                        <p class="card-text"><b>Description: </b><br />@Model.Description</p>
+                        <p class="card-text"><b>Movie type: </b> @Model.MovieType</p>
+                        <p class="card-text"><b>Premiere: </b>@Model.Premier.ToString("dd MMM yy")</p>
+                        <p class="card-text">
+                            <b>Category: </b>
+                            @foreach (var category in Model.Movie_Categories)
+                            {
+
+                                @category.Category.Name <b></b> 
+
+                            }
+                        </p>
+                        <br />
+                        <dd>
+                            @{
+                                if (Model.Ratings.Count > 0)
+                                {
+                                    <p><b>Overall rating:</b> @((short)Model.OverallRating)</p>
+                                }
+                                else
+                                {
+                                    <p><b>Be the first to rate</b></p>
+                                }
+
+                            }
+                        </dd>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div class="form-group required">
+                                <div class="col-sm-12">
+                                    <label class="control-label"></label>
+                                    <div class="star-rating">
+                                        @{ using (Html.BeginForm("SetRating", "Rating"))
+                                            {
+                                                @Html.HiddenFor(x => x.MovieId)
+                                                <input type="submit" value="Submit" />
+
+                                                <input id="Rank-9" type="radio" name="Rank" value="9" />
+                                                <label for="Rank-9" title="9 stars">★</label>
+
+                                                <input id="Rank-8" type="radio" name="Rank" value="8" />
+                                                <label for="Rank-8" title="8 stars">★</label>
+
+                                                <input id="Rank-7" type="radio" name="Rank" value="7" />
+                                                <label for="Rank-7" title="7 stars">★</label>
+
+                                                <input id="Rank-6" type="radio" name="Rank" value="6" />
+                                                <label for="Rank-6" title="6 stars">★</label>
+
+                                                <input id="Rank-5" type="radio" name="Rank" value="5" />
+                                                <label for="Rank-5" title="5 stars">★</label>
+
+                                                <input id="Rank-4" type="radio" name="Rank" value="4" />
+                                                <label for="Rank-4" title="4 stars">★</label>
+
+                                                <input id="Rank-3" type="radio" name="Rank" value="3" />
+                                                <label for="Rank-3" title="3 stars">★</label>
+
+                                                <input id="Rank-2" type="radio" name="Rank" value="2" />
+                                                <label for="Rank-2" title="2 stars">★</label>
+
+                                                <input id="Rank-1" type="radio" name="Rank" value="1" />
+                                                <label for="Rank-1" title="1 star">★</label>
+
+
+                                            }
+
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="col-md-12 text-center">
+                    @{ if (Model.MovieType == "film")
+                        {
+                            <a class="btn btn-outline-primary float-right" asp-action="Index">
+                                Back to List
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-outline-primary float-right" asp-action="IndexSeries">
+                                Back to List
+                            </a>
+                        }
+                    }
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a class="btn btn-success text-white float-right" asp-controller="Storages" asp-action="AddToStorageCard" asp-route-id="@Model.MovieId"> Add</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<dt>
+    Comments
+</dt>
+@foreach (var c in Model.ListOfComments)
+{
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            @c.PublishedDate <b>User:</b> @c.UserName
+        </div>
+        <div class="col-md-7">
+            @Html.Raw(c.Comments.Replace("\n", "<br />"))
+        </div>
+        <div class="col-md-2">
+            @if (User.Identity.IsAuthenticated && User.Identity.Name == c.UserName)
+            {
+                <a class="btn btn-danger text-white float-right" asp-controller="Comments" asp-action="Delete" asp-route-id="@c.Id"> Delete</a>
+            }
+        </div>
+    </div>
+}
+<hr />
+<partial name="_MainComment" />
+
+
+<style>
+    .star-rating {
+        direction: rtl;
+        display: inline-block;
+        padding: 20px;
+    }
+
+        .star-rating input[type=radio] {
+            display: none;
+        }
+
+        .star-rating label {
+            color: #bbb;
+            font-size: 35px;
+            padding: 0;
+            cursor: pointer;
+            -webkit-transition: all .3s ease-in-out;
+            transition: all .3s ease-in-out;
+        }
+
+            .star-rating label:hover,
+            .star-rating label:hover ~ label,
+            .star-rating input[type=radio]:checked ~ label {
+                color: #f2b600;
+            }
+
+    .body-content {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .dl-horizontal dt {
+        white-space: normal;
+    }
+
+
+
+    .commentBox {
+        background-color: #efefef;
+        padding: 10px;
+        border-radius: 10px;
+    }
+</style>

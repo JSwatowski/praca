@@ -1,0 +1,97 @@
+﻿@model IEnumerable<pracainz.Models.Movie>
+
+@{
+    ViewData["Title"] = "List of Movies";
+}
+<div class="text-center">
+    <form asp-controller="Movies" asp-action="FilterCatSerie">
+        @foreach (var item in ViewBag.CatList)
+        {
+            @* <input name="Name" type="button" class="btn btn-primary" value="@item.Name">*@
+            <button value="@item.Name" class="btn btn-primary" name="searchString">@item.Name</button>
+        }
+    </form>
+</div>
+<br />
+<div class="container-fluid text-center">
+    <form class="d-flex  text-center" asp-controller="Movies" asp-action="FilterSerie" style="padding-left: 650px; padding-right: 650px">
+        <input name="searchString" type="text" class="form-control me-sm-2" placeholder="Type movies name" aria-label="Recipient's username" aria-describedby="button-addon2">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
+
+    </form>
+</div>
+<br />
+<div class="container-fluid text-center">
+    <form class="d-flex  text-center" asp-controller="Movies" asp-action="FilterDataSerie" style="padding-left: 650px; padding-right: 650px">
+        <h4>From:</h4><input name="date1" type="date" class="form-control me-sm-2" placeholder="Type movies name" aria-label="Recipient's username" aria-describedby="button-addon2">
+        <h4>To:</h4> <input name="date2" type="date" class="form-control me-sm-2" placeholder="Type movies name" aria-label="Recipient's username" aria-describedby="button-addon2">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
+
+    </form>
+</div>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        if (item.MovieTypeId == 2)
+        {
+            <div class="col-md-3 col-xs-4 border-primary mb-5 text-center" style="padding-left:7em;">
+                <div class="card mb-3" style="max-width: 250px;">
+                    <div class="row g-0">
+
+                        <div class="col-md-12">
+                            <img src="@item.ImageURL" width="100%" alt="@item.Name">
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="card-footer">
+                                <p class="card-text col-md-14 mb-1">
+                                <p>  @item.Name</p>
+                                @{ if (User.Identity.IsAuthenticated)
+                                    {
+                                        <a class="btn btn-outline-primary float-right" asp-action="Details" asp-route-id="@item.Id"> Show Details</a>
+                                        <a class="btn btn-success text-white" asp-controller="Storages" asp-action="AddToStorageCard" asp-route-id="@item.Id"> Add</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-outline-primary text-center" asp-action="Details" asp-route-id="@item.Id"> Show Details</a>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+
+
+
+
+@*
+    <div class="row">
+        @foreach (var item in ViewBag.movieList as List<pracainz.Models.Movie>)
+        {
+            <div class="col-md-3 col-xs-4 border-primary mb-5 text-center" style="padding-left:7em;">
+                <div class="card mb-3" style="max-width: 250px;">
+                    <div class="row g-0">
+
+                        <div class="col-md-12">
+                            <img src="@item.ImageURL" width="100%" alt="@item.Name">
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="card-footer">
+                                <p class="card-text col-md-14 mb-1">
+                                <p>  @item.Name</p>
+                                <a class="btn btn-outline-primary float-right" asp-action="Details" asp-route-id="@item.Id"> Show Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+*@
